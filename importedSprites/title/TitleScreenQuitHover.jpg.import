@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/TitleScreenQuitHover.jpg-e798e81ea6d9a0dd1605c49da41164cc.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://importedSprites/title/TitleScreenQuitHover.jpg"
+dest_files=[ "res://.import/TitleScreenQuitHover.jpg-e798e81ea6d9a0dd1605c49da41164cc.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0
