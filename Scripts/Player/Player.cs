@@ -12,11 +12,17 @@ namespace Collapse.Player
         //Physics
         public Vector2 TickVelocity { get; private set; } = Vector2.Zero; //Velocity in the current tick
         public bool TickOnGround { get; private set; } = false; //Is the player on the ground in the current tick
+        public bool TickOnWall { get; private set; } = false; //Is the player on the wall in the current tick
         public bool TickMoving { get; private set; } = false; //Is the player moving in the current tick
 
         //Nodes
         private AnimatedSprite Sprite { get; set; }
+        private Camera2D Camera { get; set; }
         private Label TestLabel { get; set; }
+
+        //Visual
+        private Vector2 CameraZoomMin { get; set; } = new Vector2(0.2f, 0.2f);
+        private Vector2 CameraZoomMax { get; set; } = new Vector2(0.9f, 0.9f);
 
         // - - - Godot Methods - - - \\
         public override void _Ready()
@@ -24,6 +30,7 @@ namespace Collapse.Player
             base._Ready();
 
             Sprite = GetNode<AnimatedSprite>("Sprite");
+            Camera = GetNode<Camera2D>("Camera");
             TestLabel = GetNode<Label>("Camera/TestLabel");
         }
 
@@ -41,6 +48,14 @@ namespace Collapse.Player
             ProcessMovement(delta);
         }
 
+        public override void _Input(InputEvent @event)
+        {
+            base._Input(@event);
+
+            if (@event.IsActionPressed("camera_zoomin")) { ZoomCamera(true); }
+            if (@event.IsActionPressed("camera_zoomout")) { ZoomCamera(false); }
+        }
+
         // - - - Physics and Movement - - - \\
         private void ProcessMovement(float delta)
         {
@@ -54,7 +69,10 @@ namespace Collapse.Player
 
             //Vertical movement
             vertVelocity.y += GameGlobals.PLAYERGRAVITY * delta; //Apply gravity
+            //Floor jump
             if (TickOnGround && Input.IsActionJustPressed("movement_jump")) { vertVelocity.y = -JumpHeight; }
+            //Wall jump
+            if(TickOnWall && Input.IsActionJustPressed("movement_jump")) { vertVelocity.y = -JumpHeight; }
 
             //If player is moving this tick, process movement
             if(horVelocity != Vector2.Zero || vertVelocity != Vector2.Zero)
@@ -70,9 +88,10 @@ namespace Collapse.Player
             TestLabel.Text = TickOnGround + "\n" + TickVelocity.ToString();
 
             TickOnGround = IsOnFloor();
+            TickOnWall = IsOnWall();
         }
 
-        // - - - Animation - - - \\
+        // - - - Animation & Visual - - - \\
         private void ProcessAnimation()
         {
             //Called every frame, determines what animation should be done depending on velocity and state
@@ -90,13 +109,27 @@ namespace Collapse.Player
             else if(horMovement != 0)
             {
                 Sprite.Animation = "walk";
-                //If player is moving left, flip sprite
-                Sprite.FlipH = (horMovement < 0);
             }
             else
             {
                 Sprite.Animation = "idle";
             }
+
+            //If player is moving left, flip sprite
+            Sprite.FlipH = (horMovement < 0);
+        }
+
+        //Zooms the camera in or out, true for in false for out
+        private void ZoomCamera(bool zoomIn)
+        {
+            Vector2 currentZoom = Camera.Zoom;
+            //Set the step for zoom
+            if (zoomIn) { currentZoom -= new Vector2(.05f, .05f); }
+            else { currentZoom += new Vector2(.05f, .05f); }
+            //If zoom is higher than max, set to max. if lower than min, set to min
+            if(currentZoom > CameraZoomMax) { Camera.Zoom = CameraZoomMax; }
+            else if(currentZoom < CameraZoomMin) { Camera.Zoom = CameraZoomMin; }
+            else { Camera.Zoom = currentZoom; }
         }
     }
 }
