@@ -15,6 +15,7 @@ namespace Collapse.Player
         public bool TickOnWall { get; private set; } = false; //Is the player on the wall in the current tick
         public bool TickMoving { get; private set; } = false; //Is the player moving in the current tick
         private Vector2 snap = new Vector2(0, 32);
+
         //Nodes
         private AnimatedSprite Sprite { get; set; }
         private Camera2D Camera { get; set; }
@@ -69,11 +70,13 @@ namespace Collapse.Player
 
             //Vertical movement
             vertVelocity.y += GameGlobals.PLAYERGRAVITY * delta; //Apply gravity
+
             //Floor jump
             if (TickOnGround && Input.IsActionJustPressed("movement_jump")) { 
                 vertVelocity.y = -JumpHeight;
                 snap = new Vector2(0, 0); //unsnap from floor
             }
+
             //Wall jump
             if(TickOnWall && Input.IsActionJustPressed("movement_jump")) {
               /*  Vector2 hitpos = GetSlideCollision(0).Position; THIS IS WALLJUMP STUFF that doesnt work
@@ -98,14 +101,9 @@ namespace Collapse.Player
                 TickVelocity = horVelocity + vertVelocity;
                 //Move and slide
                 TickVelocity = MoveAndSlideWithSnap(TickVelocity, snap, Vector2.Up);
-                if (IsOnFloor())
-                {
-                    snap = new Vector2(0, 32);
-                } 
-                else
-                {
-                    snap = new Vector2(0, 0);
-                }
+
+                if (IsOnFloor()) { snap = new Vector2(0, 32); }
+                else { snap = new Vector2(0, 0); }
             }
 
             TestLabel.Text = TickOnGround + "\n" + TickVelocity.ToString();
