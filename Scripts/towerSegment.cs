@@ -10,7 +10,9 @@ public class towerSegment : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        
+        RandomNumberGenerator rand = new RandomNumberGenerator();
+        rand.Randomize();
+        speed = rand.RandfRange(.1f, .27f);
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.

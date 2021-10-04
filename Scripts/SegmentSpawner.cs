@@ -41,7 +41,7 @@ public class SegmentSpawner : Position2D
     {
         Vector2 pos = GlobalPosition;
         //GD.Print((plr.Position - pos).Length());
-        if ((plr.Position - pos).Length() < 400 && completed == false) //close to this position
+        if (Math.Abs(plr.GlobalPosition.y - GlobalPosition.y) < 600 && completed == false) //close to this position
         {
             completed = true;
             SpawnSegment();

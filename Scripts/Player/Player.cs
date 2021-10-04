@@ -89,7 +89,7 @@ namespace Collapse.Player
             }
 
             //Wall jump
-            if(TickOnWall && Input.IsActionJustPressed("movement_jump")) {
+            /*if(TickOnWall && Input.IsActionJustPressed("movement_jump")) {
                 Vector2 hitpos = GetSlideCollision(0).Position; 
                 if (hitpos.x > Position.x)
                 {
@@ -101,7 +101,7 @@ namespace Collapse.Player
                 } 
                 vertVelocity.y = -12;
 
-            }
+            } */
 
             //If player is moving this tick, process movement
             if(horVelocity != Vector2.Zero || vertVelocity != Vector2.Zero)

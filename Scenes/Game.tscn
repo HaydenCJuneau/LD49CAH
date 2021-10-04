@@ -16,15 +16,15 @@ region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 2 )
-region = Rect2( 160, 0, 32, 32 )
+region = Rect2( 224, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
-region = Rect2( 192, 0, 32, 32 )
+region = Rect2( 160, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 2 )
-region = Rect2( 224, 0, 32, 32 )
+region = Rect2( 192, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 2 )
@@ -49,14 +49,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 3 ), SubResource( 4 ) ],
-"loop": false,
-"name": "jump",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 5 ) ],
+"frames": [ SubResource( 3 ) ],
 "loop": true,
 "name": "fall",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ), SubResource( 5 ) ],
+"loop": false,
+"name": "jump",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
@@ -79,34 +79,57 @@ position = Vector2( 128, 360 )
 
 [node name="towerSegment" type="Node2D" parent="."]
 modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 152, 352 )
+position = Vector2( 47, 352 )
 script = ExtResource( 4 )
 speed = 0.1
 
 [node name="platforms" parent="towerSegment" instance=ExtResource( 3 )]
 
 [node name="towerSegment2" type="Node2D" parent="."]
-modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 256.667, 352 )
+modulate = Color( 0, 1, 0.905882, 1 )
+position = Vector2( 151.667, 352 )
 script = ExtResource( 4 )
-speed = 0.3
+speed = 0.2
 
 [node name="platforms" parent="towerSegment2" instance=ExtResource( 3 )]
 
 [node name="towerSegment3" type="Node2D" parent="."]
-modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 360, 352 )
+modulate = Color( 0.172549, 1, 0, 1 )
+position = Vector2( 255, 352 )
 script = ExtResource( 4 )
-speed = 0.05
+speed = 0.23
 
 [node name="platforms" parent="towerSegment3" instance=ExtResource( 3 )]
 
+[node name="towerSegment4" type="Node2D" parent="."]
+modulate = Color( 1, 0, 0.772549, 1 )
+position = Vector2( 359, 352 )
+script = ExtResource( 4 )
+speed = 0.14
+
+[node name="platforms" parent="towerSegment4" instance=ExtResource( 3 )]
+
+[node name="towerSegment5" type="Node2D" parent="."]
+position = Vector2( 463.667, 352 )
+script = ExtResource( 4 )
+speed = 0.14
+
+[node name="platforms" parent="towerSegment5" instance=ExtResource( 3 )]
+
+[node name="towerSegment6" type="Node2D" parent="."]
+modulate = Color( 1, 0.72549, 0, 1 )
+position = Vector2( 567, 352 )
+script = ExtResource( 4 )
+speed = 0.24
+
+[node name="platforms" parent="towerSegment6" instance=ExtResource( 3 )]
+
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 80, 352 )
+position = Vector2( -36, 359 )
 scale = Vector2( 0.973838, 0.988678 )
 script = ExtResource( 5 )
-MoveSpeed = 100.0
-JumpHeight = 85.0
+MoveSpeed = 150.0
+JumpHeight = 144.0
 
 [node name="Hitbox" type="CollisionShape2D" parent="Player"]
 shape = SubResource( 1 )
@@ -116,15 +139,16 @@ frames = SubResource( 10 )
 animation = "fall"
 
 [node name="StartingPlatform" type="StaticBody2D" parent="."]
+position = Vector2( -116, 7 )
 
 [node name="Shape" type="CollisionShape2D" parent="StartingPlatform"]
 position = Vector2( 48, 408 )
 shape = SubResource( 11 )
 
 [node name="Camera" type="Camera2D" parent="."]
-position = Vector2( 255.603, 352.4 )
+position = Vector2( 256.667, 296.901 )
 current = true
-zoom = Vector2( 0.3, 0.3 )
+zoom = Vector2( 0.4, 0.4 )
 script = ExtResource( 6 )
 
 [node name="TestLabel" type="Label" parent="Camera"]
@@ -138,7 +162,7 @@ __meta__ = {
 }
 
 [node name="Killzone" type="Area2D" parent="Camera"]
-position = Vector2( -463.603, -848.4 )
+position = Vector2( -500.602, -807.196 )
 
 [node name="Hitbox" type="CollisionShape2D" parent="Camera/Killzone"]
 position = Vector2( 936, 1056 )
