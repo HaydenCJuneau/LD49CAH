@@ -31,8 +31,8 @@ namespace Collapse.Player
             base._Ready();
 
             Sprite = GetNode<AnimatedSprite>("Sprite");
-            Camera = GetNode<Camera2D>("Camera");
-            TestLabel = GetNode<Label>("Camera/TestLabel");
+            Camera = GetParent().GetNode<Camera2D>("Camera");
+            TestLabel = GetParent().GetNode<Label>("Camera/TestLabel");
         }
 
         public override void _Process(float delta)
@@ -61,13 +61,24 @@ namespace Collapse.Player
         private void ProcessMovement(float delta)
         {
             //Tick based stats
-            Vector2 horVelocity = Vector2.Zero;
+           // Vector2 horVelocity = Vector2.Zero;
             Vector2 vertVelocity = new Vector2(0, TickVelocity.y);
-
+            Vector2 horVelocity = new Vector2(TickVelocity.x,0);
             //Horizontal movement
-            if (Input.IsActionPressed("movement_right")) { horVelocity.x += 1; }
-            if (Input.IsActionPressed("movement_left")) { horVelocity.x -= 1; }
-
+            if (Input.IsActionPressed("movement_right")) { horVelocity.x += 7*delta; }
+            if (Input.IsActionPressed("movement_left")) { horVelocity.x -= 7*delta; }
+            if (!(Input.IsActionPressed("movement_right") || Input.IsActionPressed("movement_left")))
+            {
+                horVelocity.x = 0f;
+            }
+            if (horVelocity.x > 12f)
+            {
+                horVelocity.x = 12f;
+            }
+            if (horVelocity.x < -12f)
+            {
+                horVelocity.x = -12f;
+            }
             //Vertical movement
             vertVelocity.y += GameGlobals.PLAYERGRAVITY * delta; //Apply gravity
 
@@ -79,16 +90,16 @@ namespace Collapse.Player
 
             //Wall jump
             if(TickOnWall && Input.IsActionJustPressed("movement_jump")) {
-              /*  Vector2 hitpos = GetSlideCollision(0).Position; THIS IS WALLJUMP STUFF that doesnt work
+                Vector2 hitpos = GetSlideCollision(0).Position; 
                 if (hitpos.x > Position.x)
                 {
-                    horVelocity.x = -JumpHeight;
+                    horVelocity.x = -12;
                 }
                 else
                 {
-                    horVelocity.x = JumpHeight;
-                } */
-                vertVelocity.y = -JumpHeight;
+                    horVelocity.x = 12;
+                } 
+                vertVelocity.y = -12;
 
             }
 
@@ -110,6 +121,7 @@ namespace Collapse.Player
 
             TickOnGround = IsOnFloor();
             TickOnWall = IsOnWall();
+           
         }
 
         // - - - Animation & Visual - - - \\
