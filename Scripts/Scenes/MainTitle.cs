@@ -60,7 +60,7 @@ namespace Collapse.Scenes
 
         public void _on_play_pressed()
         {
-            //LOAD MAIN SCENE
+            GetTree().ChangeScene("res://Scenes/Game.tscn");
         }
         public void _on_quit_pressed()
         {
