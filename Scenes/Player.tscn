@@ -75,7 +75,6 @@ frames = SubResource( 10 )
 animation = "fall"
 
 [node name="Camera" type="Camera2D" parent="."]
-current = true
 zoom = Vector2( 0.5, 0.5 )
 
 [node name="TestLabel" type="Label" parent="Camera"]
