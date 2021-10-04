@@ -8,7 +8,8 @@ namespace Collapse.Player
         //Stats
         [Export] public float MoveSpeed { get; private set; }
         [Export] public float JumpHeight { get; private set; }
-
+        private float StartingHeight { get; set; }
+        private int PlayerScore { get; set; }
         //Physics
         public Vector2 TickVelocity { get; private set; } = Vector2.Zero; //Velocity in the current tick
         public bool TickOnGround { get; private set; } = false; //Is the player on the ground in the current tick
@@ -19,7 +20,7 @@ namespace Collapse.Player
         //Nodes
         private AnimatedSprite Sprite { get; set; }
         private Camera2D Camera { get; set; }
-        private Label TestLabel { get; set; }
+        private Label ScoreLabel { get; set; }
 
         //Visual
         private Vector2 CameraZoomMin { get; set; } = new Vector2(0.2f, 0.2f);
@@ -32,7 +33,9 @@ namespace Collapse.Player
 
             Sprite = GetNode<AnimatedSprite>("Sprite");
             Camera = GetParent().GetNode<Camera2D>("Camera");
-            TestLabel = GetParent().GetNode<Label>("Camera/TestLabel");
+            ScoreLabel = GetParent().GetNode<Label>("Camera/TestLabel");
+
+            StartingHeight = GlobalPosition.y;
         }
 
         public override void _Process(float delta)
@@ -40,6 +43,8 @@ namespace Collapse.Player
             base._Process(delta);
 
             ProcessAnimation();
+
+            PlayerScore = (int)(GlobalPosition.y - StartingHeight);
         }
 
         public override void _PhysicsProcess(float delta)
@@ -117,11 +122,8 @@ namespace Collapse.Player
                 else { snap = new Vector2(0, 0); }
             }
 
-            TestLabel.Text = TickOnGround + "\n" + TickVelocity.ToString();
-
             TickOnGround = IsOnFloor();
-            TickOnWall = IsOnWall();
-           
+            TickOnWall = IsOnWall();    
         }
 
         // - - - Animation & Visual - - - \\

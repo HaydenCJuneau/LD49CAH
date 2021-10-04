@@ -152,10 +152,10 @@ zoom = Vector2( 0.4, 0.4 )
 script = ExtResource( 6 )
 
 [node name="TestLabel" type="Label" parent="Camera"]
-margin_left = -232.0
-margin_top = -128.0
-margin_right = -144.0
-margin_bottom = -88.0
+margin_left = -376.667
+margin_top = -208.901
+margin_right = -288.667
+margin_bottom = -168.901
 text = "floor"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -167,5 +167,4 @@ position = Vector2( -500.602, -807.196 )
 [node name="Hitbox" type="CollisionShape2D" parent="Camera/Killzone"]
 position = Vector2( 936, 1056 )
 shape = SubResource( 12 )
-
 [connection signal="body_entered" from="Camera/Killzone" to="." method="KillzoneBodyEntered"]
