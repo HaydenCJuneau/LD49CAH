@@ -19,6 +19,9 @@ speed = 0.2
 visible = true
 collision_layer = 1
 
+[node name="platforms20" parent="towerSegment/platforms" index="19"]
+visible = false
+
 [node name="towerSegment2" type="Node2D" parent="."]
 position = Vector2( -95.8615, 0 )
 script = ExtResource( 3 )
@@ -29,6 +32,9 @@ speed = 0.3
 [node name="platforms" parent="towerSegment2/platforms" index="0"]
 visible = true
 collision_layer = 1
+
+[node name="platforms20" parent="towerSegment2/platforms" index="19"]
+visible = false
 
 [editable path="towerSegment/platforms"]
 

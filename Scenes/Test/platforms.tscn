@@ -5,7 +5,7 @@
 
 [node name="Node2D" type="Node2D"]
 
-[node name="platforms" type="TileMap" parent="."]
+[node name="platforms1" type="TileMap" parent="."]
 visible = false
 modulate = Color( 1, 0.266667, 0.266667, 1 )
 tile_set = ExtResource( 2 )
