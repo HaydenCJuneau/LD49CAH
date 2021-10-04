@@ -12,6 +12,7 @@ public class SegmentSpawner : Position2D
     private Node2D twr;
     private bool completed = false;
     private TileMap chosenPlatforms;
+    private int index;
     // Called when the node enters the scene tree for the first time.
     
     public override void _Ready()
@@ -19,6 +20,13 @@ public class SegmentSpawner : Position2D
         plr = GetNode<KinematicBody2D>("/root/Main/Player");
         tile = GD.Load<PackedScene>("res://Scenes/platforms.tscn");
         twr = (Node2D)GetParent().GetParent();
+        Node2D segment = (Node2D)GetParent();
+        RandomNumberGenerator rng = new RandomNumberGenerator();
+        rng.Randomize();
+        index = rng.RandiRange(0, 19);
+        TileMap chosenPlat = (TileMap)segment.GetChild(index);
+        chosenPlat.Show();
+        chosenPlat.CollisionLayer = 1;
     }
 
     public void SpawnSegment()
@@ -26,9 +34,7 @@ public class SegmentSpawner : Position2D
         tileClone = (Node2D)tile.Instance();
         twr.AddChild(tileClone);
         tileClone.GlobalPosition = GlobalPosition;
-        chosenPlatforms = (TileMap)tileClone.GetChild(0);
-        chosenPlatforms.Show();
-        chosenPlatforms.CollisionLayer = 1;
+
     }
   // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
