@@ -14,7 +14,6 @@ modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 0, -0.529724 )
 script = ExtResource( 3 )
 speed = 0.2
-clr = Color( 0.592157, 1, 0, 0 )
 
 [node name="platforms" parent="towerSegment" instance=ExtResource( 1 )]
 
@@ -27,4 +26,5 @@ speed = 0.3
 [node name="platforms" parent="towerSegment2" instance=ExtResource( 1 )]
 
 [editable path="towerSegment/platforms"]
+
 [editable path="towerSegment2/platforms"]

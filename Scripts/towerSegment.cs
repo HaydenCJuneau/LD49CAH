@@ -7,7 +7,6 @@ public class towerSegment : Node2D
     // private int a = 2;
     // private string b = "text";
     [Export] public float speed { get; private set; } = .5f;
-    [Export] public Color clr { get; private set; }
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
