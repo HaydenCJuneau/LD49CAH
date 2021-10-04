@@ -14,7 +14,7 @@ namespace Collapse.Player
         public bool TickOnGround { get; private set; } = false; //Is the player on the ground in the current tick
         public bool TickOnWall { get; private set; } = false; //Is the player on the wall in the current tick
         public bool TickMoving { get; private set; } = false; //Is the player moving in the current tick
-
+        private Vector2 snap = new Vector2(0, 32);
         //Nodes
         private AnimatedSprite Sprite { get; set; }
         private Camera2D Camera { get; set; }
@@ -70,9 +70,24 @@ namespace Collapse.Player
             //Vertical movement
             vertVelocity.y += GameGlobals.PLAYERGRAVITY * delta; //Apply gravity
             //Floor jump
-            if (TickOnGround && Input.IsActionJustPressed("movement_jump")) { vertVelocity.y = -JumpHeight; }
+            if (TickOnGround && Input.IsActionJustPressed("movement_jump")) { 
+                vertVelocity.y = -JumpHeight;
+                snap = new Vector2(0, 0); //unsnap from floor
+            }
             //Wall jump
-            if(TickOnWall && Input.IsActionJustPressed("movement_jump")) { vertVelocity.y = -JumpHeight; }
+            if(TickOnWall && Input.IsActionJustPressed("movement_jump")) {
+              /*  Vector2 hitpos = GetSlideCollision(0).Position; THIS IS WALLJUMP STUFF that doesnt work
+                if (hitpos.x > Position.x)
+                {
+                    horVelocity.x = -JumpHeight;
+                }
+                else
+                {
+                    horVelocity.x = JumpHeight;
+                } */
+                vertVelocity.y = -JumpHeight;
+
+            }
 
             //If player is moving this tick, process movement
             if(horVelocity != Vector2.Zero || vertVelocity != Vector2.Zero)
@@ -82,7 +97,15 @@ namespace Collapse.Player
                 horVelocity = horVelocity.Normalized() * MoveSpeed;
                 TickVelocity = horVelocity + vertVelocity;
                 //Move and slide
-                TickVelocity = MoveAndSlide(TickVelocity, Vector2.Up);
+                TickVelocity = MoveAndSlideWithSnap(TickVelocity, snap, Vector2.Up);
+                if (IsOnFloor())
+                {
+                    snap = new Vector2(0, 32);
+                } 
+                else
+                {
+                    snap = new Vector2(0, 0);
+                }
             }
 
             TestLabel.Text = TickOnGround + "\n" + TickVelocity.ToString();
