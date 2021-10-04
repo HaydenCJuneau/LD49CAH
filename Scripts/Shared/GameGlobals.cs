@@ -6,9 +6,9 @@ namespace Collapse
     public static class GameGlobals
     {
         //Consts will never change through the course of the game
-        public const float PLAYERGRAVITY = 100;
+        public const float PLAYERGRAVITY = 110;
 
         //Static properties can change but can be accessed anywhere
-        public static int GAMEFPS = 120;
+        public static int GAMEFPS = 60;
     }
 }
